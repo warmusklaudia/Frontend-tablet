@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="340" height="340" viewBox="0 0 340 340">
+  <g id="Group_1" data-name="Group 1" transform="translate(-342 -307)">
+    <g id="Rectangle_1" data-name="Rectangle 1" transform="translate(342 307)" fill="#fff" stroke="#707070" stroke-width="1">
+      <rect width="340" height="340" stroke="none"/>
+      <rect x="0.5" y="0.5" width="339" height="339" fill="none"/>
+    </g>
+    <text id="Fake_camera" data-name="Fake camera" transform="translate(428 489)" fill="#9d9d9d" font-size="30" font-family="OpenSans-Italic, Open Sans" font-style="italic"><tspan x="0" y="0">Fake camera</tspan></text>
+  </g>
+</svg>

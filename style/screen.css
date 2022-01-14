@@ -1,0 +1,380 @@
+/*------------------------------------*\
+#FONTS
+\*------------------------------------*/
+
+/*------------------------------------*\
+#Variables
+\*------------------------------------*/
+
+:root {
+  --global-color-alpha: #22ce99;
+  --global-color-neutral-light: #ffffff;
+  --global-color-neutral-dark: #282829;
+  --global-color-neutral-x-dark: #111111;
+
+  --global-color-beta: #3b86ff;
+
+  --global-page-backgroundColor-startScherm: var(--global-color-alpha);
+  --global-page-backgroundColor: var(--global-color-neutral-light);
+
+  /* Whitespace */
+  --global-baseline: calc(1rem / 3);
+  --global-whitespace-xxs: var(--global-baseline); /* = 5px */
+  --global-whitespace-xs: calc(var(--global-baseline) * 2); /* = 10px */
+  --global-whitespace-sm: calc(var(--global-baseline) * 3); /* = 15px */
+  --global-whitespace-md: calc(var(--global-baseline) * 4); /* = 20px */
+  --global-whitespace-lg: calc(var(--global-baseline) * 5); /* = 25px */
+  --global-whitespace-xl: calc(var(--global-baseline) * 6); /* = 30px */
+  --global-whitespace-xxl: calc(var(--global-baseline) * 8); /* = 40px */
+}
+
+/*------------------------------------*\
+  #GENERIC
+  \*------------------------------------*/
+
+/*
+      Generic: Page
+      ---
+      Global page styles + universal box-sizing:
+  */
+
+html {
+  font-size: 100%;
+  line-height: 1.5;
+  font-family: 'Open Sans', sans-serif;
+  color: var(--global-color-neutral-dark);
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#startscherm {
+  background-color: var(--global-page-backgroundColor-startScherm);
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+/*
+  * Remove text-shadow in selection highlight:
+  * https://twitter.com/miketaylr/status/12228805301
+  *
+  * Customize the background color to match your design.
+  */
+
+::-moz-selection {
+  background: var(--global-color-alpha);
+  color: white;
+  text-shadow: none;
+}
+
+::selection {
+  background: var(--global-color-beta);
+  color: white;
+  text-shadow: none;
+}
+
+/*------------------------------------*\
+  #Elements
+  \*------------------------------------*/
+
+/*
+  Elements: Images
+  ---
+  Default markup for images to make them responsive
+  */
+
+img {
+  max-width: 100%;
+  vertical-align: top;
+}
+
+/*
+      Elements: typography
+      ---
+      Default markup for typographic elements
+  */
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+}
+
+h1 {
+  /* font-size: 36px; */
+  font-size: 2.4rem;
+  line-height: calc(var(--global-baseline) * 10);
+  margin: 0 0 var(--global-whitespace-md);
+}
+
+h2 {
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: calc(var(--global-baseline) * 8);
+  margin: 0 0 var(--global-whitespace-lg);
+}
+
+h3 {
+  /* font-size: 18px; */
+  font-size: 1.2rem;
+  line-height: calc(var(--global-baseline) * 6);
+  margin: 0 0 var(--global-whitespace-md);
+}
+
+h4,
+h5,
+h6 {
+  /* font-size: 15px; */
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: calc(var(--global-baseline) * 5);
+  margin: 0 0 var(--global-whitespace-md);
+}
+
+p,
+ol,
+ul,
+dl,
+table,
+address,
+figure {
+  margin: 0 0 var(--global-whitespace-xs);
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background: LightGrey;
+  margin: 0 0 var(--global-whitespace-md);
+}
+
+a {
+  transition: all var(--global-transition-alpha);
+  color: var(--global-color-beta);
+  outline-color: var(--global-color-beta);
+  outline-width: medium;
+  outline-offset: 2px;
+}
+
+a,
+.c-start {
+  text-decoration: none;
+}
+
+a:visited,
+a:active {
+  color: var(--global-color-beta);
+}
+
+/*------------------------------------*\
+  #OBJECTS
+  \*------------------------------------*/
+
+/*
+      Objects: Row
+      ---
+      Creates a horizontal row that stretches the viewport and adds padding around children
+  */
+
+.o-row {
+  position: relative;
+  padding: var(--global-whitespace-lg) var(--global-whitespace-lg) var(--global-baseline);
+}
+
+/*
+      Objects: Container
+      ---
+      Creates a horizontal container that sets de global max-width
+  */
+
+.o-container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 78em; /* 78 * 15px = 1170 */
+  width: 100%;
+}
+
+/*------------------------------------*\
+  #COMPONENTS
+  \*------------------------------------*/
+/*
+      Component: App
+      ---
+      Global app component
+  */
+
+.c-app {
+  display: grid;
+  grid-template-rows: 3rem 8rem 4rem 4rem 10rem 8rem 3rem;
+  grid-template-columns: 8rem auto 8rem;
+}
+
+.c-app__item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*
+      Component: Startscherm
+  */
+.c-start {
+  color: var(--global-color-neutral-light);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 2.5rem;
+}
+
+/*
+      Component: Inlogscherm
+  */
+
+.c-camera {
+  width: 37.5rem;
+  margin: auto;
+}
+
+/*
+      Component: Errorscherm
+  */
+
+.c-errorimg {
+  margin: var(--global-whitespace-xl);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*
+      Component: Message
+*/
+.c-message {
+  padding: var(--global-whitespace-xl);
+  max-width: 42rem;
+  font-size: 2rem;
+  margin: auto;
+  text-align: center;
+}
+
+.c-message-welkom {
+  font-weight: 600;
+}
+
+.c-instruction {
+  font-size: 1.8rem;
+}
+
+/*
+      Component: Robot
+*/
+
+.c-robot {
+  min-width: 18.75rem;
+  max-width: 25rem;
+  fill: var(--global-color-neutral-light);
+}
+
+.c-robot-welkom {
+  margin: auto;
+  min-width: 18.75rem;
+  max-width: 21.75rem;
+  fill: var(--global-color-alpha);
+}
+
+.c-robot__shadow {
+  fill: var(--c-robot__shadow-fill, black);
+  opacity: 0.1;
+}
+
+/*------------------------------------*\
+  #UTILITIES
+  \*------------------------------------*/
+
+.u-y-1 {
+  grid-row: 1;
+}
+.u-y-2 {
+  grid-row: 2;
+}
+.u-y-3 {
+  grid-row: 3;
+}
+.u-y-4 {
+  grid-row: 4;
+}
+.u-y-5 {
+  grid-row: 1 / -1;
+  grid-column: 2;
+}
+.u-y-6 {
+  grid-row: 7;
+  grid-column: 2;
+}
+
+/*------------------------------------*\
+  #MEDIA
+  \*------------------------------------*/
+
+@media print {
+  *,
+  *:before,
+  *:after {
+    background: transparent !important;
+    color: #000 !important;
+    /* Black prints faster:
+          http://www.sanbeiji.com/archives/953 */
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+  a[href]:after {
+    content: ' (' attr(href) ')';
+  }
+  abbr[title]:after {
+    content: ' (' attr(title) ')';
+  }
+  /*
+      * Don't show links that are fragment identifiers,
+      * or use the `javascript:` pseudo protocol
+      */
+  a[href^='#']:after,
+  a[href^='javascript:']:after {
+    content: '';
+  }
+  pre {
+    white-space: pre-wrap !important;
+  }
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+  /*
+      * Printing Tables:
+      * http://css-discuss.incutio.com/wiki/Printing_Tables
+      */
+  thead {
+    display: table-header-group;
+  }
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+}
