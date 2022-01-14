@@ -181,8 +181,10 @@ a:active {
   */
 
 .o-row {
-  position: relative;
-  padding: var(--global-whitespace-lg) var(--global-whitespace-lg) var(--global-baseline);
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  justify-content: center;
 }
 
 /*
