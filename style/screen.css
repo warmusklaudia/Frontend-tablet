@@ -233,6 +233,7 @@ a:active {
   font-style: italic;
   font-weight: 600;
   font-size: 2rem;
+  text-align: center;
 }
 
 @media (min-width: 62em) {
