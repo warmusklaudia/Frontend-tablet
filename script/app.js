@@ -6,7 +6,6 @@
 const options = {
     keepalive: 60,
     clean: true,
-    port = 443,
     useSSL: true,
     rejectUnauthorized: false
 }
