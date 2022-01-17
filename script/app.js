@@ -67,6 +67,10 @@ const listenToSocket = function () {
     })
 }
 
+io.engine.on("connection_error", (err) => {
+    console.log(err);
+  });
+
 const get = (url) => fetch(url).then((r) => r.json());
 
 const getVisitorData = async (id) => {
