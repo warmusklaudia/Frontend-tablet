@@ -9,7 +9,7 @@ const options = {
     rejectUnauthorized: false
 }
 
-const client = mqtt.connect("wss://13.81.105.139", options);
+const client = mqtt.connect("mqtts://13.81.105.139", options);
 
 let message, naamBezoeker;
 let afspraakId;
