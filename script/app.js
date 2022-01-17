@@ -1,3 +1,6 @@
+// const lanIP = `${window.location.hostname}:5000`;
+// const socket = io(`http://${lanIP}`);
+
 const lanIP = `${window.location.hostname}:5000`;
 const socket = io.connect(`https://${lanIP}`, {secure: true});
 
