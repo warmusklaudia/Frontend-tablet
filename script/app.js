@@ -9,7 +9,7 @@ const options = {
     useSSL: true,
     rejectUnauthorized: false,
     protocol: "wss",
-    port: 1883
+    port: 443
 }
 
 const client = mqtt.connect("mqtt://13.81.105.139", options);
