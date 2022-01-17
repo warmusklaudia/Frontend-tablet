@@ -59,6 +59,9 @@ const listenToSocket = function () {
     socket.on("connect", function(){
         console.log("Verbonden met de socket webserver");
     })
+    socket.on("connection_error", (err) => {
+        console.log(err);
+    })
 
     socket.on("B2F_locatie_changed", function(jsonObject){
         // jsonObject is dan de payload van de message
@@ -67,9 +70,6 @@ const listenToSocket = function () {
     })
 }
 
-io.engine.on("connection_error", (err) => {
-    console.log(err);
-  });
 
 const get = (url) => fetch(url).then((r) => r.json());
 
