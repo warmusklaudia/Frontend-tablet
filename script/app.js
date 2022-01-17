@@ -1,5 +1,5 @@
 const lanIP = `${window.location.hostname}:5000`;
-const socket = io(`http://${lanIP}`);
+const socket = io(`https://${lanIP}`);
 
 let message, naamBezoeker;
 let afspraakId;
