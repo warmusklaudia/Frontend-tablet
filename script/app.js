@@ -1,12 +1,11 @@
+const lanIP = `${window.location.hostname}:5000`;
+const socket = io(`http://${lanIP}`);
+
 let message, naamBezoeker;
 let afspraakId;
 
 // hardcoded json for testing
 // zogezegd payload van message uit backend (opties: KLEEDKAMER + ONDERWEG, SPORTSCUBE + ONDERWEG, alle andere gevallen => default welkom message)
-let json = {
-    "locatie" : null
-}
-
 
 const changeMessage = async (jsonObject) => {
     // jsonObject is dan de payload van de message
@@ -53,6 +52,18 @@ const changeMessage = async (jsonObject) => {
     }
 }
 
+const listenToSocket = function () {
+    socket.on("connect", function(){
+        console.log("Verbonden met de socket webserver");
+    })
+
+    socket.on("B2F_locatie_changed", function(jsonObject){
+        // jsonObject is dan de payload van de message
+        console.log("Message toegekomen: %O", jsonObject);
+        changeMessage(jsonObject);
+    })
+}
+
 const get = (url) => fetch(url).then((r) => r.json());
 
 const getVisitorData = async (id) => {
@@ -73,5 +84,5 @@ document.addEventListener("DOMContentLoaded", function(){
 
     // event triggered functie (socket.io?) => moet nog geadd worden
     // volgende functie komt dan in de event listener
-    changeMessage(json);
+    listenToSocket();
 })
