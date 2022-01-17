@@ -1,14 +1,17 @@
 // const lanIP = `${window.location.hostname}:5000`;
-// const socket = io(`http://${lanIP}`);
+// const socket = io(`https://${lanIP}`);
 
-const lanIP = `${window.location.hostname}:5000`;
-const socket = io(`https://${lanIP}`);
+// SWITCHED FROM SOCKET TO MQTT 
+
+const options = {
+    keepalive: 60,
+    clean: true,
+}
+
+const client = mqtt.connect("mqtt://13.81.105.139", options);
 
 let message, naamBezoeker;
 let afspraakId;
-
-// hardcoded json for testing
-// zogezegd payload van message uit backend (opties: KLEEDKAMER + ONDERWEG, SPORTSCUBE + ONDERWEG, alle andere gevallen => default welkom message)
 
 const changeMessage = async (jsonObject) => {
     // jsonObject is dan de payload van de message
@@ -55,20 +58,38 @@ const changeMessage = async (jsonObject) => {
     }
 }
 
-const listenToSocket = function () {
-    socket.on("connect", function(){
-        console.log("Verbonden met de socket webserver");
-    })
-    socket.on("connection_error", (err) => {
-        console.log(err);
-    })
+// const listenToSocket = function () {
+//     socket.on("connect", function(){
+//         console.log("Verbonden met de socket webserver");
+//     })
+//     socket.on("connection_error", (err) => {
+//         console.log(err);
+//     })
 
-    socket.on("B2F_locatie_changed", function(jsonObject){
-        // jsonObject is dan de payload van de message
-        console.log("Message toegekomen: %O", jsonObject);
-        changeMessage(jsonObject);
+//     socket.on("B2F_locatie_changed", function(jsonObject){
+//         // jsonObject is dan de payload van de message
+//         console.log("Message toegekomen: %O", jsonObject);
+//         changeMessage(jsonObject);
+//     })
+// }
+
+client.on("connect", function(){
+    client.subscribe("B2F/locatie", function(err){
+        if (!err){
+            client.publish("F2B/connection", JSON.stringify({ "connectionStatus": "connected" }));
+        }
     })
-}
+})
+
+client.on("message", function (topic, message){
+    const msg = JSON.parse(message.toString());
+
+    console.log(`Message: ${message.toString()} on Topic: ${topic}`);
+
+    if (topic == "B2F/locatie"){
+        changeMessage(msg);
+    }
+})
 
 
 const get = (url) => fetch(url).then((r) => r.json());
@@ -91,5 +112,5 @@ document.addEventListener("DOMContentLoaded", function(){
 
     // event triggered functie (socket.io?) => moet nog geadd worden
     // volgende functie komt dan in de event listener
-    listenToSocket();
+    // listenToSocket();
 })
