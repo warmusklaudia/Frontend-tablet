@@ -6,7 +6,9 @@
 const options = {
     keepalive: 60,
     clean: true,
-    port = 443
+    port = 443,
+    useSSL: true,
+    rejectUnauthorized: false
 }
 
 const client = mqtt.connect("mqtts://13.81.105.139", options);
