@@ -10,7 +10,7 @@ const options = {
     checkServerIdentity: false
 }
 
-const client = mqtt.connect("wss://13.81.105.139", options);
+const client = mqtt.connect("mqtt://13.81.105.139", options);
 
 let message, naamBezoeker;
 let afspraakId;
@@ -49,6 +49,18 @@ const changeMessage = async (jsonObject) => {
         <p class="c-instruction">Wij gaan naar de Sportscube</p>
         `;
     }
+    else if (locatie == "onthaal"){
+        htmlString = `
+        <p class="c-instruction">Wij zijn aangekomen aan het onthaal.</p>
+        <p class="c-message-welkom">Tot ziens!</p>
+        `;
+    }
+    else if (locatie == "onderweg naar onthaal"){
+        htmlString = `
+        <p class="c-message-welkom">Volg mij</p>
+        <p class="c-instruction">Wij gaan naar het onthaal</p>
+        `;
+    }
     else {
         naamBezoeker.innerHTML = `${bezoekersData.voornaam}`;
     }
@@ -57,8 +69,26 @@ const changeMessage = async (jsonObject) => {
 
     if (locatie != null){
         message.innerHTML = htmlString;
+        changeLocation(afspraakId, jsonObject);
     }
 }
+
+const changeLocation = (id, jsonObject) => {
+    const putMethod = {
+      method: 'PUT', // Method itself
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8', // Indicates the content
+      },
+      body: JSON.stringify(jsonObject), // We send data in JSON format
+    };
+  
+    // make the HTTP put request using fetch api
+    fetch(`https://bezoekersapi.azurewebsites.net/api/afspraken/${id}/locatie`, putMethod)
+      .then((response) => response.json())
+      .then((data) => console.log(data)) // Manipulate the data retrieved back, if we want to do something with it
+      .catch((err) => console.log(err)); // Do something with the error
+
+};
 
 // const listenToSocket = function () {
 //     socket.on("connect", function(){
