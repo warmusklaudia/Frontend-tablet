@@ -8,10 +8,11 @@ const options = {
     clean: true,
     useSSL: true,
     rejectUnauthorized: false,
+    checkServerIdentity: false,
     protocol: "wss"
 }
 
-const client = mqtt.connect("mqtts://13.81.105.139", "wss");
+const client = mqtt.connect("mqtts://13.81.105.139", options);
 
 let message, naamBezoeker;
 let afspraakId;
