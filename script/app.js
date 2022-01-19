@@ -39,7 +39,6 @@ const changeMessage = async (jsonObject) => {
         `;
   } else {
     naamBezoeker.innerHTML = `${bezoekersData.voornaam}`;
-    uurAfspraak.innerHTML = `${bezoekersData.tijdstip}`;
   }
 
   // voorkomt dat welkom message wordt overgeschreven
@@ -63,7 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   message = document.querySelector('.js-message');
   naamBezoeker = document.querySelector('.js-naam');
-  uurAfspraak = document.querySelector('.js-uur');
 
   const urlParams = new URLSearchParams(window.location.search);
   afspraakId = urlParams.get('afspraakId');
