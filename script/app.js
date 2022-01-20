@@ -140,8 +140,5 @@ document.addEventListener('DOMContentLoaded', function () {
     // event triggered functie (socket.io?) => moet nog geadd worden
     // volgende functie komt dan in de event listener
     // listenToSocket();
-})
-  // event triggered functie (socket.io?) => moet nog geadd worden
-  // volgende functie komt dan in de event listener
-  changeMessage(json);
+    changeMessage(json);
 });
