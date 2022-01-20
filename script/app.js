@@ -7,7 +7,7 @@ const options = {
     keepalive: 60,
     clean: true,
     port: 443,
-    host: "TemiBroker",
+    host: "40.113.96.140",
     protocol: "wss",
     rejectUnauthorized: false
 }
