@@ -5,12 +5,10 @@
 
 const options = {
     keepalive: 60,
-    clean: true,
-    rejectUnauthorized: false,
-    checkServerIdentity: false
+    clean: true
 }
 
-const client = mqtt.connect("mqtt://13.81.105.139", options);
+const client = mqtt.connect("mqtts://13.81.105.139", options);
 
 let message, naamBezoeker;
 let afspraakId;
