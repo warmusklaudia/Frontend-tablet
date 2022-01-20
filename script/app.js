@@ -6,7 +6,8 @@
 const options = {
     keepalive: 60,
     clean: true,
-    port: 443
+    port: 443,
+    rejectUnauthorized: false
 }
 
 const client = mqtt.connect("mqtts://TemiBroker", options);
