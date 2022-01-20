@@ -10,7 +10,8 @@ const options = {
     clean: true,
     port: 443,
     protocol: "wss",
-    rejectUnauthorized: false
+    rejectUnauthorized: false,
+    ca: '/Cert/ca.crt'
 }
 
 const client = mqtt.connect('mqtts://' + HOST ,options);
