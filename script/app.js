@@ -3,16 +3,17 @@
 
 // SWITCHED FROM SOCKET TO MQTT 
 
+const HOST = "TemiBroker"
+
 const options = {
     keepalive: 60,
     clean: true,
     port: 443,
-    host: "40.113.96.140",
     protocol: "wss",
     rejectUnauthorized: false
 }
 
-const client = mqtt.connect(options);
+const client = mqtt.connect('mqtts://' + HOST ,options);
 
 let message, naamBezoeker;
 let afspraakId;
