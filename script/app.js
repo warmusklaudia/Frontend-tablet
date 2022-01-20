@@ -5,7 +5,8 @@
 
 const options = {
     keepalive: 60,
-    clean: true
+    clean: true,
+    port: 443
 }
 
 const client = mqtt.connect("mqtts://13.81.105.139", options);
@@ -140,5 +141,5 @@ document.addEventListener('DOMContentLoaded', function () {
     // event triggered functie (socket.io?) => moet nog geadd worden
     // volgende functie komt dan in de event listener
     // listenToSocket();
-    changeMessage(json);
+    // changeMessage(json);
 });
