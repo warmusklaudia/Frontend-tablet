@@ -1,8 +1,6 @@
 // const lanIP = `${window.location.hostname}:5000`;
 // const socket = io(`https://${lanIP}`);
 
-// SWITCHED FROM SOCKET TO MQTT 
-
 const CA_FILE = `-----BEGIN CERTIFICATE-----
 MIIEQTCCAymgAwIBAgIUJSnAG1X02P+EFWE5v3oFj9yt1/0wDQYJKoZIhvcNAQEL
 BQAwga8xCzAJBgNVBAYTAkJFMRgwFgYDVQQIDA9XZXN0LVZsYWFuZGVyZW4xETAP
@@ -29,16 +27,41 @@ BMg800j2MhGYFVslzZ5SZEHDvPh6tSh1wDxF21A0PUFZ6gdgoXHc6ubSg5x80dNN
 Ugoox7bgbX0lwxmQ9sqg1NmmVrJ8P/V/rc92pw13s6xtrvdmGw==
 -----END CERTIFICATE-----`
 
-const HOST = "TemiBroker"
+const HOST = "TemiBroker";
 
 const options = {
     keepalive: 60,
     clean: true,
     ca: CA_FILE,
     port: 443
-}
+};
 
 const client = mqtt.connect('mqtts://' + HOST ,options);
+
+client.on("connect", function(){
+  client.subscribe("B2F/locatie", function(err){
+      if (!err){
+          client.publish("F2B/connection", JSON.stringify({ "connectionStatus": "connected" }));
+      }
+  })
+});
+
+client.on("message", function (topic, message){
+  const msg = JSON.parse(message.toString());
+
+  console.log(`Message: ${message.toString()} on Topic: ${topic}`);
+
+  if (topic == "B2F/locatie"){
+      changeMessage(msg);
+  }
+});
+
+client.on("error", (e) => {
+this.logger.error("MQTT error.", e.message);
+this.logger.debug(e);
+});
+
+// EINDE MQTT CLIENT
 
 let message, naamBezoeker;
 let afspraakId;
@@ -96,7 +119,7 @@ const changeMessage = async (jsonObject) => {
         message.innerHTML = htmlString;
         changeLocation(afspraakId, jsonObject);
     }
-}
+};
 
 const changeLocation = (id, jsonObject) => {
     const putMethod = {
@@ -129,29 +152,6 @@ const changeLocation = (id, jsonObject) => {
 //         changeMessage(jsonObject);
 //     })
 // }
-
-client.on("connect", function(){
-    client.subscribe("B2F/locatie", function(err){
-        if (!err){
-            client.publish("F2B/connection", JSON.stringify({ "connectionStatus": "connected" }));
-        }
-    })
-})
-
-client.on("message", function (topic, message){
-    const msg = JSON.parse(message.toString());
-
-    console.log(`Message: ${message.toString()} on Topic: ${topic}`);
-
-    if (topic == "B2F/locatie"){
-        changeMessage(msg);
-    }
-})
-
-client.on("error", (e) => {
-  this.logger.error("MQTT error.", e.message);
-  this.logger.debug(e);
-
 
 const get = (url) => fetch(url).then((r) => r.json());
 
