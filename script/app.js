@@ -4,6 +4,7 @@
 // SWITCHED FROM SOCKET TO MQTT 
 
 const HOST = "TemiBroker"
+const CA_FILE = "./Cert/ca.crt"
 
 const options = {
     keepalive: 60,
@@ -11,7 +12,7 @@ const options = {
     port: 443,
     protocol: "wss",
     rejectUnauthorized: false,
-    ca: '/Cert/ca.crt'
+    ca: CA_FILE
 }
 
 const client = mqtt.connect('mqtts://' + HOST ,options);
