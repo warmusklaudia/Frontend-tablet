@@ -33,12 +33,11 @@ Ugoox7bgbX0lwxmQ9sqg1NmmVrJ8P/V/rc92pw13s6xtrvdmGw==
 const options = {
     keepalive: 60,
     clean: true,
-    port: 443,
     rejectUnauthorized: false,
     ca: CA_FILE
 }
 
-const client = mqtt.connect('wss://' + HOST ,options);
+const client = mqtt.connect('wss://' + HOST + ':443',options);
 
 let message, naamBezoeker;
 let afspraakId;
