@@ -3,7 +3,6 @@
 
 // SWITCHED FROM SOCKET TO MQTT 
 
-const HOST = "TemiBroker"
 const CA_FILE = `-----BEGIN CERTIFICATE-----
 MIIEQTCCAymgAwIBAgIUJSnAG1X02P+EFWE5v3oFj9yt1/0wDQYJKoZIhvcNAQEL
 BQAwga8xCzAJBgNVBAYTAkJFMRgwFgYDVQQIDA9XZXN0LVZsYWFuZGVyZW4xETAP
@@ -30,14 +29,16 @@ BMg800j2MhGYFVslzZ5SZEHDvPh6tSh1wDxF21A0PUFZ6gdgoXHc6ubSg5x80dNN
 Ugoox7bgbX0lwxmQ9sqg1NmmVrJ8P/V/rc92pw13s6xtrvdmGw==
 -----END CERTIFICATE-----`
 
+const HOST = "TemiBroker"
+
 const options = {
     keepalive: 60,
     clean: true,
-    rejectUnauthorized: false,
-    ca: CA_FILE
+    ca: CA_FILE,
+    port: 443
 }
 
-const client = mqtt.connect('wss://' + HOST + ':443',options);
+const client = mqtt.connect('mqtts://' + HOST ,options);
 
 let message, naamBezoeker;
 let afspraakId;
@@ -146,6 +147,10 @@ client.on("message", function (topic, message){
         changeMessage(msg);
     }
 })
+
+client.on("error", (e) => {
+  this.logger.error("MQTT error.", e.message);
+  this.logger.debug(e);
 
 
 const get = (url) => fetch(url).then((r) => r.json());
