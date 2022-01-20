@@ -7,10 +7,12 @@ const options = {
     keepalive: 60,
     clean: true,
     port: 443,
-    rejectUnauthorized: false
+    host: "TemiBroker",
+    protocol: "wss",
+    rejectUnauthorized: false"
 }
 
-const client = mqtt.connect("mqtts://TemiBroker", options);
+const client = mqtt.connect(options);
 
 let message, naamBezoeker;
 let afspraakId;
