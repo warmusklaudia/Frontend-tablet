@@ -15,7 +15,7 @@ const options = {
     ca: CA_FILE
 }
 
-const client = mqtt.connect('mqtts://' + HOST ,options);
+const client = mqtt.connect(HOST ,options);
 
 let message, naamBezoeker;
 let afspraakId;
