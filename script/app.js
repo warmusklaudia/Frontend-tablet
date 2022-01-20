@@ -9,7 +9,7 @@ const options = {
     port: 443,
     host: "TemiBroker",
     protocol: "wss",
-    rejectUnauthorized: false"
+    rejectUnauthorized: false
 }
 
 const client = mqtt.connect(options);
