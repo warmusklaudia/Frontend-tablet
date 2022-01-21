@@ -3,11 +3,10 @@
 
 const options = {
     keepalive: 60,
-    clean: true,
-    port: 80
+    clean: true
 };
 
-const client = mqtt.connect('mqtt://40.113.96.140' ,options);
+const client = mqtt.connect('ws://40.113.96.140:80/' ,options);
 
 client.on("connect", function(){
   client.subscribe("B2F/locatie", function(err){
