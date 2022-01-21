@@ -35,7 +35,7 @@ const options = {
     port: 1883
 };
 
-const client = mqtt.connect('mqtt://' + HOST ,options);
+const client = mqtt.connect('mqtt://40.113.96.140' ,options);
 
 client.on("connect", function(){
   client.subscribe("B2F/locatie", function(err){
