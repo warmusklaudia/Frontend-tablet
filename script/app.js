@@ -32,11 +32,10 @@ const HOST = "TemiBroker";
 const options = {
     keepalive: 60,
     clean: true,
-    ca: CA_FILE,
-    port: 443
+    port: 1883
 };
 
-const client = mqtt.connect('mqtts://' + HOST ,options);
+const client = mqtt.connect('mqtt://' + HOST ,options);
 
 client.on("connect", function(){
   client.subscribe("B2F/locatie", function(err){
@@ -54,11 +53,6 @@ client.on("message", function (topic, message){
   if (topic == "B2F/locatie"){
       changeMessage(msg);
   }
-});
-
-client.on("error", (e) => {
-this.logger.error("MQTT error.", e.message);
-this.logger.debug(e);
 });
 
 // EINDE MQTT CLIENT
