@@ -46,9 +46,9 @@ const changeMessage = async (jsonObject) => {
     htmlString = `
         <p class="c-instruction">Wij zijn aangekomen aan de kleedkamers. Volg verder instructies op jouw gsm.</p>
         `;
-        setTimeout(function () {
-          window.location.href = `index.html`;
-        }, 2000);
+    setTimeout(function () {
+      window.location.href = `index.html`;
+    }, 2000);
   } else if (locatie == 'onderweg naar kleedkamer') {
     htmlString = `
         <p class="c-message-welkom">Volg mij</p>
@@ -59,9 +59,9 @@ const changeMessage = async (jsonObject) => {
         <p class="c-instruction">Wij zijn aangekomen aan de Sportscube.</p>
         <p class="c-message-welkom">Veel plezier!</p>
         `;
-        setTimeout(function () {
-          window.location.href = `index.html`;
-        }, 2000);
+    setTimeout(function () {
+      window.location.href = `index.html`;
+    }, 2000);
   } else if (locatie == 'onderweg naar sportscube') {
     htmlString = `
         <p class="c-message-welkom">Volg mij</p>
@@ -72,9 +72,9 @@ const changeMessage = async (jsonObject) => {
         <p class="c-instruction">Wij zijn aangekomen aan het onthaal.</p>
         <p class="c-message-welkom">Tot ziens!</p>
         `;
-        setTimeout(function () {
-          window.location.href = `index.html`;
-        }, 2000);
+    setTimeout(function () {
+      window.location.href = `index.html`;
+    }, 2000);
   } else if (locatie == 'onderweg naar onthaal') {
     htmlString = `
         <p class="c-message-welkom">Volg mij</p>
@@ -82,6 +82,7 @@ const changeMessage = async (jsonObject) => {
         `;
   } else {
     naamBezoeker.innerHTML = `${bezoekersData.voornaam}`;
+    uurAfspraak.innerHTML = `${bezoekersData.tijdstip}`;
   }
 
   // voorkomt dat welkom message wordt overgeschreven
@@ -137,6 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   message = document.querySelector('.js-message');
   naamBezoeker = document.querySelector('.js-naam');
+  uurAfspraak = document.querySelector('.js-uur');
 
   const urlParams = new URLSearchParams(window.location.search);
   afspraakId = urlParams.get('afspraakId');
