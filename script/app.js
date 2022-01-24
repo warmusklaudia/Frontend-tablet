@@ -3,8 +3,15 @@
 
 const options = {
     keepalive: 60,
-    clean: true
+    clean: true,
+    ca: CA_FILE,
+    port: 443
 };
+=======
+    useSSL: true,
+    rejectUnauthorized: false,
+}
+>>>>>>> Stashed changes
 
 const client = mqtt.connect('ws://40.113.96.140:80' ,options);
 
