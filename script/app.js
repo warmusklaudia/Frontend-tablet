@@ -46,6 +46,9 @@ const changeMessage = async (jsonObject) => {
     htmlString = `
         <p class="c-instruction">Wij zijn aangekomen aan de kleedkamers. Volg verder instructies op jouw gsm.</p>
         `;
+        setTimeout(function () {
+          window.location.href = `index.html`;
+        }, 2000);
   } else if (locatie == 'onderweg naar kleedkamer') {
     htmlString = `
         <p class="c-message-welkom">Volg mij</p>
@@ -56,6 +59,9 @@ const changeMessage = async (jsonObject) => {
         <p class="c-instruction">Wij zijn aangekomen aan de Sportscube.</p>
         <p class="c-message-welkom">Veel plezier!</p>
         `;
+        setTimeout(function () {
+          window.location.href = `index.html`;
+        }, 2000);
   } else if (locatie == 'onderweg naar sportscube') {
     htmlString = `
         <p class="c-message-welkom">Volg mij</p>
@@ -66,6 +72,9 @@ const changeMessage = async (jsonObject) => {
         <p class="c-instruction">Wij zijn aangekomen aan het onthaal.</p>
         <p class="c-message-welkom">Tot ziens!</p>
         `;
+        setTimeout(function () {
+          window.location.href = `index.html`;
+        }, 2000);
   } else if (locatie == 'onderweg naar onthaal') {
     htmlString = `
         <p class="c-message-welkom">Volg mij</p>
