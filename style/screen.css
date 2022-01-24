@@ -30,7 +30,7 @@
   /* border radius */
   --global-borderRadius: var(--global-whitespace-xl);
   --global-borderWidth: 1px;
-  
+
   /* Whitespace */
   --global-baseline: calc(1rem / 3);
   --global-whitespace-xxs: var(--global-baseline); /* = 5px */
@@ -223,10 +223,8 @@ a:active {
   */
 
 .o-row {
-  display: flex;
-  align-items: center;
-  height: 100vh;
-  justify-content: center;
+  position: relative;
+  padding: var(--global-whitespace-lg);
 }
 
 /*
