@@ -2,34 +2,27 @@
 // const socket = io(`https://${lanIP}`);
 
 const options = {
-    keepalive: 60,
-    clean: true,
-    ca: CA_FILE,
-    port: 443
+  keepalive: 60,
+  clean: true,
 };
-=======
-    useSSL: true,
-    rejectUnauthorized: false,
-}
->>>>>>> Stashed changes
 
-const client = mqtt.connect('ws://40.113.96.140:80' ,options);
+const client = mqtt.connect('ws://40.113.96.140:80', options);
 
-client.on("connect", function(){
-  client.subscribe("B2F/locatie", function(err){
-      if (!err){
-          client.publish("F2B/connection", JSON.stringify({ "connectionStatus": "connected" }));
-      }
-  })
+client.on('connect', function () {
+  client.subscribe('B2F/locatie', function (err) {
+    if (!err) {
+      client.publish('F2B/connection', JSON.stringify({ connectionStatus: 'connected' }));
+    }
+  });
 });
 
-client.on("message", function (topic, message){
+client.on('message', function (topic, message) {
   const msg = JSON.parse(message.toString());
 
   console.log(`Message: ${message.toString()} on Topic: ${topic}`);
 
-  if (topic == "B2F/locatie"){
-      changeMessage(msg);
+  if (topic == 'B2F/locatie') {
+    changeMessage(msg);
   }
 });
 
@@ -68,46 +61,42 @@ const changeMessage = async (jsonObject) => {
         <p class="c-message-welkom">Volg mij</p>
         <p class="c-instruction">Wij gaan naar de Sportscube</p>
         `;
-    }
-    else if (locatie == "onthaal"){
-        htmlString = `
+  } else if (locatie == 'onthaal') {
+    htmlString = `
         <p class="c-instruction">Wij zijn aangekomen aan het onthaal.</p>
         <p class="c-message-welkom">Tot ziens!</p>
         `;
-    }
-    else if (locatie == "onderweg naar onthaal"){
-        htmlString = `
+  } else if (locatie == 'onderweg naar onthaal') {
+    htmlString = `
         <p class="c-message-welkom">Volg mij</p>
         <p class="c-instruction">Wij gaan naar het onthaal</p>
         `;
-    }
-    else {
-        naamBezoeker.innerHTML = `${bezoekersData.voornaam}`;
-    }
+  } else {
+    naamBezoeker.innerHTML = `${bezoekersData.voornaam}`;
+  }
 
   // voorkomt dat welkom message wordt overgeschreven
 
-    if (locatie != null){
-        message.innerHTML = htmlString;
-        changeLocation(afspraakId, jsonObject);
-    }
+  if (locatie != null) {
+    message.innerHTML = htmlString;
+    changeLocation(afspraakId, jsonObject);
+  }
 };
 
 const changeLocation = (id, jsonObject) => {
-    const putMethod = {
-      method: 'PUT', // Method itself
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8', // Indicates the content
-      },
-      body: JSON.stringify(jsonObject), // We send data in JSON format
-    };
-  
-    // make the HTTP put request using fetch api
-    fetch(`https://bezoekersapi.azurewebsites.net/api/afspraken/${id}/locatie`, putMethod)
-      .then((response) => response.json())
-      .then((data) => console.log(data)) // Manipulate the data retrieved back, if we want to do something with it
-      .catch((err) => console.log(err)); // Do something with the error
+  const putMethod = {
+    method: 'PUT', // Method itself
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8', // Indicates the content
+    },
+    body: JSON.stringify(jsonObject), // We send data in JSON format
+  };
 
+  // make the HTTP put request using fetch api
+  fetch(`https://bezoekersapi.azurewebsites.net/api/afspraken/${id}/locatie`, putMethod)
+    .then((response) => response.json())
+    .then((data) => console.log(data)) // Manipulate the data retrieved back, if we want to do something with it
+    .catch((err) => console.log(err)); // Do something with the error
 };
 
 // const listenToSocket = function () {
@@ -143,8 +132,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const urlParams = new URLSearchParams(window.location.search);
   afspraakId = urlParams.get('afspraakId');
 
-    // event triggered functie (socket.io?) => moet nog geadd worden
-    // volgende functie komt dan in de event listener
-    // listenToSocket();
-    // changeMessage(json);
+  // event triggered functie (socket.io?) => moet nog geadd worden
+  // volgende functie komt dan in de event listener
+  // listenToSocket();
+  // changeMessage(json);
 });
