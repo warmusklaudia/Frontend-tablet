@@ -1,14 +1,35 @@
-const lanIP = `${window.location.hostname}:5000`;
-const socket = io(`http://${lanIP}`);
+// const lanIP = `${window.location.hostname}:5000`;
+// const socket = io(`https://${lanIP}`);
+
+const options = {
+  keepalive: 60,
+  clean: true,
+};
+
+const client = mqtt.connect('ws://40.113.96.140:80', options);
+
+client.on('connect', function () {
+  client.subscribe('B2F/locatie', function (err) {
+    if (!err) {
+      client.publish('F2B/connection', JSON.stringify({ connectionStatus: 'connected' }));
+    }
+  });
+});
+
+client.on('message', function (topic, message) {
+  const msg = JSON.parse(message.toString());
+
+  console.log(`Message: ${message.toString()} on Topic: ${topic}`);
+
+  if (topic == 'B2F/locatie') {
+    changeMessage(msg);
+  }
+});
+
+// EINDE MQTT CLIENT
 
 let message, naamBezoeker;
 let afspraakId;
-
-// hardcoded json for testing
-// zogezegd payload van message uit backend (opties: KLEEDKAMER + ONDERWEG, SPORTSCUBE + ONDERWEG, alle andere gevallen => default welkom message)
-let json = {
-  locatie: null,
-};
 
 const changeMessage = async (jsonObject) => {
   // jsonObject is dan de payload van de message
@@ -25,6 +46,9 @@ const changeMessage = async (jsonObject) => {
     htmlString = `
         <p class="c-instruction">Wij zijn aangekomen aan de kleedkamers. Volg verder instructies op jouw gsm.</p>
         `;
+        setTimeout(function () {
+          window.location.href = `index.html`;
+        }, 2000);
   } else if (locatie == 'onderweg naar kleedkamer') {
     htmlString = `
         <p class="c-message-welkom">Volg mij</p>
@@ -35,10 +59,26 @@ const changeMessage = async (jsonObject) => {
         <p class="c-instruction">Wij zijn aangekomen aan de Sportscube.</p>
         <p class="c-message-welkom">Veel plezier!</p>
         `;
+        setTimeout(function () {
+          window.location.href = `index.html`;
+        }, 2000);
   } else if (locatie == 'onderweg naar sportscube') {
     htmlString = `
         <p class="c-message-welkom">Volg mij</p>
         <p class="c-instruction">Wij gaan naar de Sportscube</p>
+        `;
+  } else if (locatie == 'onthaal') {
+    htmlString = `
+        <p class="c-instruction">Wij zijn aangekomen aan het onthaal.</p>
+        <p class="c-message-welkom">Tot ziens!</p>
+        `;
+        setTimeout(function () {
+          window.location.href = `index.html`;
+        }, 2000);
+  } else if (locatie == 'onderweg naar onthaal') {
+    htmlString = `
+        <p class="c-message-welkom">Volg mij</p>
+        <p class="c-instruction">Wij gaan naar het onthaal</p>
         `;
   } else {
     naamBezoeker.innerHTML = `${bezoekersData.voornaam}`;
@@ -48,20 +88,40 @@ const changeMessage = async (jsonObject) => {
 
   if (locatie != null) {
     message.innerHTML = htmlString;
+    changeLocation(afspraakId, jsonObject);
   }
 };
 
-const listenToSocket = function () {
-    socket.on("connect", function(){
-        console.log("Verbonden met de socket webserver");
-    })
+const changeLocation = (id, jsonObject) => {
+  const putMethod = {
+    method: 'PUT', // Method itself
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8', // Indicates the content
+    },
+    body: JSON.stringify(jsonObject), // We send data in JSON format
+  };
 
-    socket.on("B2F_locatie_changed", function(jsonObject){
-        // jsonObject is dan de payload van de message
-        console.log("Message toegekomen: %O", jsonObject);
-        changeMessage(jsonObject);
-    })
-}
+  // make the HTTP put request using fetch api
+  fetch(`https://bezoekersapi.azurewebsites.net/api/afspraken/${id}/locatie`, putMethod)
+    .then((response) => response.json())
+    .then((data) => console.log(data)) // Manipulate the data retrieved back, if we want to do something with it
+    .catch((err) => console.log(err)); // Do something with the error
+};
+
+// const listenToSocket = function () {
+//     socket.on("connect", function(){
+//         console.log("Verbonden met de socket webserver");
+//     })
+//     socket.on("connection_error", (err) => {
+//         console.log(err);
+//     })
+
+//     socket.on("B2F_locatie_changed", function(jsonObject){
+//         // jsonObject is dan de payload van de message
+//         console.log("Message toegekomen: %O", jsonObject);
+//         changeMessage(jsonObject);
+//     })
+// }
 
 const get = (url) => fetch(url).then((r) => r.json());
 
@@ -81,11 +141,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const urlParams = new URLSearchParams(window.location.search);
   afspraakId = urlParams.get('afspraakId');
 
-    // event triggered functie (socket.io?) => moet nog geadd worden
-    // volgende functie komt dan in de event listener
-    listenToSocket();
-})
   // event triggered functie (socket.io?) => moet nog geadd worden
   // volgende functie komt dan in de event listener
-  changeMessage(json);
+  // listenToSocket();
+  // changeMessage(json);
 });
