@@ -8,15 +8,29 @@
 
 :root {
   --global-color-alpha: #22ce99;
+  --color-alpha-light: #6cd1b2;
+  --color-alpha-dark: #25af85;
   --global-color-neutral-light: #ffffff;
+  --global-color-neutral-xxx-light: #e2e3e7;
+  --global-color-neutral-xx-light: #caccd4;
+  --global-color-neutral-x-light: #b5b6c0;
   --global-color-neutral-dark: #282829;
   --global-color-neutral-x-dark: #111111;
+
+  --global-color-green-x-transparent: #22ce994d;
+
+  --global-color-error: #ff3333;
+  --global-color-error-x-transparent: #ff33334d;
 
   --global-color-beta: #3b86ff;
 
   --global-page-backgroundColor-startScherm: var(--global-color-alpha);
   --global-page-backgroundColor: var(--global-color-neutral-light);
 
+  /* border radius */
+  --global-borderRadius: var(--global-whitespace-xl);
+  --global-borderWidth: 1px;
+  
   /* Whitespace */
   --global-baseline: calc(1rem / 3);
   --global-whitespace-xxs: var(--global-baseline); /* = 5px */
@@ -26,6 +40,34 @@
   --global-whitespace-lg: calc(var(--global-baseline) * 5); /* = 25px */
   --global-whitespace-xl: calc(var(--global-baseline) * 6); /* = 30px */
   --global-whitespace-xxl: calc(var(--global-baseline) * 8); /* = 40px */
+
+  /* transitions */
+  --global-transitionEasing-out: ease-out;
+  --global-transitionEasing-out-cubic: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --global-transitionDuration-alpha: 0.1s;
+  --global-transitionDuration-beta: 0.2s;
+  --global-transitionDuration-gamma: 0.3s;
+
+  /* forms button */
+  --global-text-color: var(--global-color-neutral-dark);
+  --global-button-color: var(--global-color-alpha);
+  --global-button-text-color: var(--global-color-neutral-x-dark);
+  --global-image-color: var(--global-color-alpha);
+  --global-button-color-hover: var(--color-alpha-light);
+  --global-button-color-active: var(--color-alpha-dark);
+
+  /* forms input */
+  --global-label-color: var(--global-color-neutral-dark);
+  --global-placeholder-color: var(--global-color-neutral-x-light);
+  --global-input-backgroundColor: White;
+  --global-input-color: var(--global-color-neutral-x-dark);
+  --global-input-borderColor: var(--global-color-neutral-xxx-light);
+  --global-input-hover-borderColor: var(--global-color-neutral-xx-light);
+  --global-input-focus-borderColor: var(--global-color-alpha);
+  --global-input-error-borderColor: var(--global-color-error);
+  --global-input-focus-boxShadowSpread: 0 0 0 3px;
+  --global-input-focus-boxShadowColor: var(--global-color-green-x-transparent);
+  --global-input-error-boxShadowColor: var(--global-color-error-x-transparent);
 }
 
 /*------------------------------------*\
@@ -309,6 +351,48 @@ a:active {
 .c-robot__shadow {
   fill: var(--c-robot__shadow-fill, black);
   opacity: 0.1;
+}
+
+.c-input {
+  --input-transition: all var(--global-transitionDuration-alpha) var(--global-transitionEasing-out);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  width: 90%;
+  border-radius: var(--input-borderRadius, var(--global-borderRadius));
+  border: var(--input-borderWidth, var(--global-borderWidth)) solid var(--input-borderColor, var(--global-input-borderColor));
+  background-color: var(--input-backgroundColor, var(--global-input-backgroundColor));
+  color: var(--global-input-color);
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: calc(var(--global-baseline) * 3);
+  padding: calc(var(--global-baseline) * 1.5 - var(--global-borderWidth)) var(--global-whitespace-md);
+  transition: var(--input-transition);
+}
+
+.c-btn {
+  display: flex;
+  justify-content: center;
+}
+
+.c-button {
+  margin-top: var(--global-whitespace-lg);
+  font-size: 2rem;
+  border-radius: var(--global-borderRadius);
+  border: none;
+  background-color: var(--global-button-color);
+  color: var(--global-button-text-color);
+  min-width: 17rem;
+  min-height: 4rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.c-button__afspraak {
+  font-size: 1rem;
+  min-width: 10rem;
+  min-height: 3rem;
 }
 
 /*------------------------------------*\
