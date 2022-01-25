@@ -1,5 +1,9 @@
 // const lanIP = `${window.location.hostname}:5000`;
 // const socket = io(`https://${lanIP}`);
+today = new Date();
+time = moment(today).format('HH:mm');
+meeting = '10:20';
+x = moment(meeting, 'HH:mm').add(0, 'seconds').add(15, 'minutes').format('HH:mm');
 
 const options = {
   keepalive: 60,
@@ -91,6 +95,8 @@ const changeMessage = async (jsonObject) => {
     message.innerHTML = htmlString;
     changeLocation(afspraakId, jsonObject);
   }
+
+  checkIfTooLate(bezoekersData.tijdstip);
 };
 
 const changeLocation = (id, jsonObject) => {
@@ -107,6 +113,25 @@ const changeLocation = (id, jsonObject) => {
     .then((response) => response.json())
     .then((data) => console.log(data)) // Manipulate the data retrieved back, if we want to do something with it
     .catch((err) => console.log(err)); // Do something with the error
+};
+
+const checkIfTooLate = (tijdstip) => {
+  x = moment(tijdstip, 'HH:mm').add(0, 'seconds').add(15, 'minutes').format('HH:mm');
+  y = moment(tijdstip, 'HH:mm').subtract(0, 'seconds').subtract(30, 'minutes').format('HH:mm');
+  console.log(tijdstip);
+
+  if (time <= x && time >= y) {
+    console.log(`${time} <= ${x} ${time <= x}`);
+    console.log('ok');
+    gsmMess.innerHTML = 'Volg nu de instructies op jouw gsm om verder te gaan';
+  } else if (time > x) {
+    console.log(`${time} <= ${x} ${time <= x}`);
+    console.log('te laat');
+    teLaat.innerHTML = `Je bent te laat!`;
+  } else if (time < y) {
+    console.log('te vroeg');
+    teLaat.innerHTML = `Je bent te vroeg!`;
+  }
 };
 
 // const listenToSocket = function () {
@@ -139,6 +164,8 @@ document.addEventListener('DOMContentLoaded', function () {
   message = document.querySelector('.js-message');
   naamBezoeker = document.querySelector('.js-naam');
   uurAfspraak = document.querySelector('.js-uur');
+  teLaat = document.querySelector('.js-toolate');
+  gsmMess = document.querySelector('.js-gsm-mess');
 
   const urlParams = new URLSearchParams(window.location.search);
   afspraakId = urlParams.get('afspraakId');

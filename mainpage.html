@@ -28,6 +28,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Open+Sans:ital,wght@0,400;0,600;1,500&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/mqtt@4.0.1/dist/mqtt.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="script/app.js"></script>                
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>     
     <script type="text/javascript" src="script/robot.js"></script>
@@ -55,7 +56,8 @@
             <div class="c-message js-message">
                 <p class="c-message-welkom">Welkom <span class="js-naam"></span></p>
                 <p class="c-instruction">Je hebt een afspraak om <span class="js-uur"></span></p>
-                <p class="c-instruction">Volg nu de instructies op jouw gsm om verder te gaan</p>
+                <p><span class="js-toolate"></span></p>
+                <p class="c-instruction"><span class="js-gsm-mess"></span> </p>
             </div>
             <div class="c-robot-welkom">
                 <svg class="js-robot" id="Robot_master" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120">
