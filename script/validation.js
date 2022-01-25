@@ -26,35 +26,69 @@ const getOnlineAPI = async () => {
   showResult(response);
 };
 
-const checkValidity = (code) => {
+const checkValidity = async (code) => {
   console.log(code);
   console.log(afspraakJson);
   if (afspraakJson.indexOf(code) >= 0) {
+    console.log(`Code: ${code}`)
     console.log('Code geldig');
-    sleep(1000).then(() => {
+    
+    if (await checkDate(code) == true){
       window.location.href = `mainpage.html?afspraakId=${code}`;
-    });
-  } else {
+    }
+    else {
+      window.location.href = `error.html?afspraakId=${code}`;
+    }
+  } 
+  else {
     console.log('Code niet geldig');
-    sleep(1000).then(() => {
-      window.location.href = 'error.html';
-    });
+
+    window.location.href = `error.html`;
   }
-};
+}
 
 const checkValidityEmail = async (email) => {
   const endPoint = `https://bezoekersapi.azurewebsites.net/api/afsprakenvoormail/${email}`;
   const response = await get(endPoint);
-  code = response[0].afspraakId;
-  console.log(response);
-  console.log(response[0].afspraakId);
 
-  if (code != null) {
-    window.location.href = `mainpage.html?afspraakId=${code}`;
-  } else {
-    window.location.href = 'error.html';
+  console.log(response)
+  if(response.length != 0){
+    code = response[0].afspraakId;
+    console.log(response);
+  }
+  else {
+    code = null;
+  }
+
+  if (code != null){
+    if (await checkDate(code) == true){
+      window.location.href = `mainpage.html?afspraakId=${code}`;
+    }
+    else {
+      window.location.href = `error.html?afspraakId=${code}`
+    }
+  } 
+  else {
+    window.location.href = `error.html`;
   }
 };
+
+const checkDate = async (afspraakId) => {
+  const endPoint = `https://bezoekersapi.azurewebsites.net/api/afspraken/${afspraakId}`;
+  const response = await get(endPoint);
+
+  let datumRegistratie = response.datum;
+  let now = new Date();
+  let dateString = moment(now). format('DD-MM-YY');
+  console.log(`${datumRegistratie} == ${dateString}`);
+
+  if(datumRegistratie == dateString){
+    return true;
+  }
+  else {
+    return false;
+  }
+} 
 
 const listenToButton = () => {
   inlogBtn.addEventListener('click', () => {
