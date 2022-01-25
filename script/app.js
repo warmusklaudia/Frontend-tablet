@@ -11,7 +11,7 @@ const client = mqtt.connect('ws://40.113.96.140:80', options);
 client.on('connect', function () {
   client.subscribe('B2F/locatie', function (err) {
     if (!err) {
-      client.publish('F2B/connection', JSON.stringify({ connectionStatus: 'connected' }));
+      client.publish('F2B/connection', JSON.stringify({ connectionStatus: 'connected' , afspraakId: afspraakId}));
     }
   });
 });
