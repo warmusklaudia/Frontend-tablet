@@ -119,6 +119,11 @@ html {
   text-shadow: none;
 }
 
+fieldset {
+  border: none;
+  padding: var(--global-whitespace-sm);
+}
+
 /*------------------------------------*\
   #Elements
   \*------------------------------------*/
@@ -365,8 +370,37 @@ a:active {
   font-family: inherit;
   font-size: 1rem;
   line-height: calc(var(--global-baseline) * 3);
-  padding: calc(var(--global-baseline) * 1.5 - var(--global-borderWidth)) var(--global-whitespace-md);
+  padding: calc(var(--global-baseline) * 3 - var(--global-borderWidth)) var(--global-whitespace-md);
   transition: var(--input-transition);
+}
+
+.c-input:hover {
+  border-color: var(--input-hover-borderColor, var(--global-input-hover-borderColor));
+}
+
+.c-input:focus,
+.c-input:active {
+  border-color: var(--input-focus-borderColor, var(--global-input-focus-borderColor));
+  box-shadow: var(--global-input-focus-boxShadowSpread) var(--input-focus-boxShadowColor, var(--global-input-focus-boxShadowColor));
+}
+
+.c-error {
+  display: block;
+  margin: auto;
+  width: 15rem;
+  height: 15rem;
+}
+
+.c-label__error-message {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--global-color-error);
+  float: right;
+  display: none;
+}
+
+.c-label__error-message.is-visible {
+  display: block;
 }
 
 .c-btn {
@@ -387,10 +421,36 @@ a:active {
   cursor: pointer;
 }
 
+.c-button:hover {
+  background-color: var(--global-button-color-hover);
+}
+
+.c-button:active {
+  background-color: var(--global-button-color-active);
+}
+.c-button:disabled {
+  background-color: var(--global-disabled-button-color);
+  cursor: auto;
+}
+
 .c-button__afspraak {
   font-size: 1rem;
   min-width: 10rem;
   min-height: 3rem;
+}
+
+/*------------------------------------*\
+#States
+\*------------------------------------*/
+
+.has-error {
+  --label-color: var(--global-color-error);
+  --input-color: var(--global-color-error);
+  --input-placeholder-color: var(--global-color-error-transparent);
+  --input-borderColor: var(--global-input-error-borderColor);
+  --input-hover-borderColor: var(--global-input-error-borderColor);
+  --input-focus-borderColor: var(--global-input-error-borderColor);
+  --input-focus-boxShadowColor: var(--global-input-error-boxShadowColor);
 }
 
 /*------------------------------------*\
