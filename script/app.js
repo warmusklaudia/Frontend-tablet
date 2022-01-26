@@ -15,7 +15,7 @@ const client = mqtt.connect('ws://40.113.96.140:80', options);
 client.on('connect', function () {
   client.subscribe('B2F/locatie', function (err) {
     if (!err) {
-      client.publish('F2B/connection', JSON.stringify({ connectionStatus: 'connected' , afspraakId: afspraakId}));
+      client.publish('F2B/connection', JSON.stringify({ connectionStatus: 'connected', afspraakId: afspraakId }));
     }
   });
 });
@@ -128,9 +128,15 @@ const checkIfTooLate = (tijdstip) => {
     console.log(`${time} <= ${x} ${time <= x}`);
     console.log('te laat');
     teLaat.innerHTML = `Je bent te laat!`;
+    setTimeout(function () {
+      window.location.href = `index.html`;
+    }, 10000);
   } else if (time < y) {
     console.log('te vroeg');
     teLaat.innerHTML = `Je bent te vroeg!`;
+    setTimeout(function () {
+      window.location.href = `index.html`;
+    }, 10000);
   }
 };
 
