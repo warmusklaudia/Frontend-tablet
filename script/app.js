@@ -169,7 +169,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const urlParams = new URLSearchParams(window.location.search);
   afspraakId = urlParams.get('afspraakId');
-
+  let URLlocatie = urlParams.get('locatie');
+  let json = JSON.stringify({ locatie: URLlocatie });
+  json = JSON.parse(json);
+  console.log(json);
+  if (URLlocatie != '') {
+    changeMessage(json);
+  }
   // event triggered functie (socket.io?) => moet nog geadd worden
   // volgende functie komt dan in de event listener
   // listenToSocket();
