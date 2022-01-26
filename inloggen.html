@@ -52,13 +52,22 @@
                 <div id="qr-reader" class="c-camera"></div>
                 <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
                <script type="text/javascript" src="script/validation.js"></script>
-               <div class="c-message">
-                   <p>Of log in met jouw e-mailadres</p>
-                   <input class="c-input js-email" type="email" name="email" id="email" placeholder="bv: john@doe.com"/>
-                   <div class="c-btn">
-                    <button class="c-button c-button__afspraak js-button" type="button">Verdergaan</button>
-                  </div>
-               </div>
+               <form action="">
+                    <fieldset class="c-message">
+                        <p class="js-email-field">
+                                <label class="js-email-label" for="email">Of log in met jouw e-mailadres
+                                <span class="c-label__error-message js-email-error-message">
+                                    This field is required   
+                                </span>
+                            </label>
+                                <input class="c-input js-email js-email-input" type="email" name="email" id="email" placeholder="bv: john@doe.com"/>
+                        </p>
+                        <div class="c-btn">
+                            <button class="c-button c-button__afspraak js-button" type="button">Verdergaan</button>
+                        </div>
+                </fieldset>
+               </form>
+
         </div>
     </div>
 </body>
