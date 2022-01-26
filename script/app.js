@@ -15,7 +15,7 @@ const client = mqtt.connect('ws://40.113.96.140:80', options);
 client.on('connect', function () {
   client.subscribe('B2F/locatie', function (err) {
     if (!err) {
-      client.publish('F2B/connection', JSON.stringify({ connectionStatus: 'connected', afspraakId: afspraakId }));
+      console.log("Connected to Mqtt!")
     }
   });
 });
@@ -24,8 +24,10 @@ client.on('message', function (topic, message) {
   const msg = JSON.parse(message.toString());
 
   console.log(`Message: ${message.toString()} on Topic: ${topic}`);
+  console.log(message.locatie)
 
-  if (topic == 'B2F/locatie') {
+  if (topic == 'B2F/locatie' && JSON.parse(message).locatie != null) {
+    console.log("IN B2F SECTION ON MESSAGE")
     changeMessage(msg);
   }
 });
@@ -38,6 +40,7 @@ let afspraakId;
 const changeMessage = async (jsonObject) => {
   // jsonObject is dan de payload van de message
   console.log(jsonObject);
+  console.log("IN CHANGE MESSAGE")
 
   let bezoekersData = await getVisitorData(afspraakId);
   console.log(bezoekersData);
@@ -95,8 +98,9 @@ const changeMessage = async (jsonObject) => {
     message.innerHTML = htmlString;
     changeLocation(afspraakId, jsonObject);
   }
-
-  checkIfTooLate(bezoekersData.tijdstip);
+  else {
+    checkIfTooLate(bezoekersData.tijdstip);
+  }
 };
 
 const changeLocation = (id, jsonObject) => {
@@ -116,27 +120,22 @@ const changeLocation = (id, jsonObject) => {
 };
 
 const checkIfTooLate = (tijdstip) => {
-  x = moment(tijdstip, 'HH:mm').add(0, 'seconds').add(15, 'minutes').format('HH:mm');
-  y = moment(tijdstip, 'HH:mm').subtract(0, 'seconds').subtract(30, 'minutes').format('HH:mm');
+  x = moment(tijdstip, 'HH:mm').add(30, 'minutes').format('HH:mm');
+  y = moment(tijdstip, 'HH:mm').subtract(30, 'minutes').format('HH:mm');
   console.log(tijdstip);
 
   if (time <= x && time >= y) {
     console.log(`${time} <= ${x} ${time <= x}`);
-    console.log('ok');
+    client.publish('F2B/connection', JSON.stringify({ connectionStatus: 'connected' , afspraakId: afspraakId}));
     gsmMess.innerHTML = 'Volg nu de instructies op jouw gsm om verder te gaan';
   } else if (time > x) {
     console.log(`${time} <= ${x} ${time <= x}`);
     console.log('te laat');
-    teLaat.innerHTML = `Je bent te laat!`;
-    setTimeout(function () {
-      window.location.href = `index.html`;
-    }, 10000);
+    teLaat.innerHTML = `Je bent te laat! Gelieve het onthaal te contacteren`;
   } else if (time < y) {
+    console.log(`${time} <= ${x} ${time <= x}`);
     console.log('te vroeg');
-    teLaat.innerHTML = `Je bent te vroeg!`;
-    setTimeout(function () {
-      window.location.href = `index.html`;
-    }, 10000);
+    teLaat.innerHTML = `Je bent te vroeg! Gelieve even te wachten in de cafetaria`;
   }
 };
 
@@ -179,7 +178,8 @@ document.addEventListener('DOMContentLoaded', function () {
   let json = JSON.stringify({ locatie: URLlocatie });
   json = JSON.parse(json);
   console.log(json);
-  if (URLlocatie != '') {
+  console.log(URLlocatie)
+  if (URLlocatie != "") {
     changeMessage(json);
   }
   // event triggered functie (socket.io?) => moet nog geadd worden
