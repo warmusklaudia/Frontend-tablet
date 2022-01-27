@@ -148,12 +148,6 @@ const checkDate = async (afspraakId) => {
   }
 };
 
-// const listenToButton = () => {
-//   inlogBtn.addEventListener('click', () => {
-//     checkValidityEmail(email.input.value);
-//   });
-// };
-
 const sleep = (time) => {
   return new Promise((resolve) => setTimeout(resolve, time));
 };
@@ -172,6 +166,5 @@ document.addEventListener('DOMContentLoaded', function () {
   console.log('DOM geladen');
   getOnlineAPI();
   init();
-  // listenToButton();
   enableListeners();
 });

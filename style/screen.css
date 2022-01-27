@@ -1,8 +1,4 @@
 /*------------------------------------*\
-#FONTS
-\*------------------------------------*/
-
-/*------------------------------------*\
 #Variables
 \*------------------------------------*/
 
@@ -152,7 +148,6 @@ h3 {
 }
 
 h1 {
-  /* font-size: 36px; */
   font-size: 2.4rem;
   line-height: calc(var(--global-baseline) * 10);
   margin: 0 0 var(--global-whitespace-md);
@@ -166,19 +161,8 @@ h2 {
 }
 
 h3 {
-  /* font-size: 18px; */
   font-size: 1.2rem;
   line-height: calc(var(--global-baseline) * 6);
-  margin: 0 0 var(--global-whitespace-md);
-}
-
-h4,
-h5,
-h6 {
-  /* font-size: 15px; */
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: calc(var(--global-baseline) * 5);
   margin: 0 0 var(--global-whitespace-md);
 }
 
