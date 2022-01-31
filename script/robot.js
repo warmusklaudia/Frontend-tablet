@@ -1,42 +1,33 @@
-
-
-function Animate(){
+function Animate() {
   let tl = gsap.timeline({
     defaults: {
-      duration: 1,
-      ease: 'power1.inOut',
+      duration: 0.75,
+      ease: 'power2.inOut',
+      yoyoEase: 'sine.out',
     },
     repeat: -1,
     yoyo: true,
   });
+
   tl.set('#Shadow', {
     transformOrigin: '50% 100%',
   })
+    .set('#Fire', {
+      transformOrigin: '50% 0%',
+    })
+    .set('#Arm-left', {
+      transformOrigin: '100% 0%',
+    })
+    .set('#Arm-right', {
+      transformOrigin: '0% 0%',
+    })
     .fromTo(
       '#Robot',
       {
         y: 2.5,
       },
       {
-        y: -2.5,
-      }
-    )
-    .to(
-      '#Arm-right',
-      {
-        y: 0.5,
-      },
-      {
-        y: -0.5,
-      }
-    )
-    .to(
-      '#Arm-left',
-      {
-        y: 0.5,
-      },
-      {
-        y: -0.5,
+        y: -5,
       }
     )
     .to(
@@ -47,9 +38,35 @@ function Animate(){
       '<'
     )
     .to(
+      '#Head',
+      {
+        y: 1,
+        yoyoEase: 'power3.out',
+      },
+      '<'
+    )
+    .to(
+      '#Arm-left',
+      {
+        rotate: -3,
+        yoyoEase: 'power3.out',
+      },
+      '<'
+    )
+    .to(
+      '#Arm-right',
+      {
+        rotate: 3,
+        yoyoEase: 'power3.out',
+      },
+      '<'
+    )
+    .to(
       '#Fire',
       {
-        scale: 0.92,
+        scale: 1.15,
+        ease: 'power3.out',
+        yoyoEase: 'power3.out',
       },
       '<'
     );
