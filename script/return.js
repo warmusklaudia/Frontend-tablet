@@ -20,6 +20,7 @@ client.on('message', function (topic, message) {
     JsonObject = msg;
     afspraakId = JsonObject['GUID'];
     locatie = JsonObject['locatie'];
+    returnstate = JsonObject['return'];
     window.location.href = `mainpage.html?afspraakId=${afspraakId}`;
   }
 });
