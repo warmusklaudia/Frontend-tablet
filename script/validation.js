@@ -80,24 +80,30 @@ const removeErrors = function (formField) {
 const checkValidityEmail = async (email) => {
   const endPoint = `https://bezoekersapi.azurewebsites.net/api/afsprakenvoormail/${email}`;
   const response = await get(endPoint);
+  let code;
+  let now = new Date();
 
-  console.log(response);
-  if (response.length != 0) {
-    code = response[0].afspraakId;
+  for (let i = 0; i < response.length; i++) {
     console.log(response);
-  } else {
-    code = null;
+    if (response.length != 0) {
+      code = response[i].afspraakId;
+      datumRegistratie = response[i].datum;
+      let dateString = moment(now).format('DD-MM-YY');
+      if (datumRegistratie == dateString) {
+        console.log(`${datumRegistratie} == ${dateString}`);
+        if ((await checkDate(code)) == true) {
+          window.location.href = `mainpage.html?afspraakId=${code}`;
+        }
+      }
+    }
   }
 
   if (code != null) {
-    if ((await checkDate(code)) == true) {
-      window.location.href = `mainpage.html?afspraakId=${code}`;
-    } else {
+    if ((await checkDate(code)) == false) {
       window.location.href = `error.html?afspraakId=${code}`;
     }
   } else {
     console.log('Code niet geldig');
-
     window.location.href = `error.html`;
   }
 };
@@ -146,10 +152,6 @@ const checkDate = async (afspraakId) => {
   } else {
     return false;
   }
-};
-
-const sleep = (time) => {
-  return new Promise((resolve) => setTimeout(resolve, time));
 };
 
 const init = () => {

@@ -116,12 +116,11 @@ const changeLocation = (id, jsonObject) => {
 };
 
 const checkIfTooLate = (tijdstip) => {
-  x = moment(tijdstip, 'HH:mm').add(0, 'seconds').add(15, 'minutes').format('HH:mm');
+  x = moment(tijdstip, 'HH:mm').add(0, 'seconds').add(30, 'minutes').format('HH:mm');
   y = moment(tijdstip, 'HH:mm').subtract(0, 'seconds').subtract(30, 'minutes').format('HH:mm');
   console.log(tijdstip);
 
   if (time <= x && time >= y) {
-    console.log(`${time} <= ${x} ${time <= x}`);
     console.log('ok');
     gsmMess.innerHTML = 'Volg nu de instructies op jouw gsm om verder te gaan';
   } else if (time > x) {
