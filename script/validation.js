@@ -27,19 +27,14 @@ const getOnlineAPI = async () => {
 };
 
 const checkValidity = async (code) => {
-  console.log(code);
   console.log(afspraakJson);
   if (afspraakJson.indexOf(code) >= 0) {
-    console.log(`Code: ${code}`);
-    console.log('Code geldig');
-
     if ((await checkDate(code)) == true) {
       window.location.href = `mainpage.html?afspraakId=${code}`;
     } else {
       window.location.href = `error.html?afspraakId=${code}`;
     }
   } else {
-    console.log('Code niet geldig');
   }
 };
 
@@ -90,7 +85,6 @@ const checkValidityEmail = async (email) => {
       datumRegistratie = response[i].datum;
       let dateString = moment(now).format('DD-MM-YY');
       if (datumRegistratie == dateString) {
-        console.log(`${datumRegistratie} == ${dateString}`);
         if ((await checkDate(code)) == true) {
           window.location.href = `mainpage.html?afspraakId=${code}`;
         }
@@ -103,7 +97,6 @@ const checkValidityEmail = async (email) => {
       window.location.href = `error.html?afspraakId=${code}`;
     }
   } else {
-    console.log('Code niet geldig');
     window.location.href = `error.html`;
   }
 };
@@ -145,7 +138,6 @@ const checkDate = async (afspraakId) => {
   let datumRegistratie = response.datum;
   let now = new Date();
   let dateString = moment(now).format('DD-MM-YY');
-  console.log(`${datumRegistratie} == ${dateString}`);
 
   if (datumRegistratie == dateString) {
     return true;

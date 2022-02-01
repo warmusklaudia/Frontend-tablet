@@ -22,10 +22,8 @@ client.on('message', function (topic, message) {
   const msg = JSON.parse(message.toString());
 
   console.log(`Message: ${message.toString()} on Topic: ${topic}`);
-  console.log(message.locatie);
 
   if (topic == 'B2F/locatie' && JSON.parse(message).locatie != null) {
-    console.log('IN B2F SECTION ON MESSAGE');
     changeMessage(msg);
   }
 });
@@ -38,7 +36,6 @@ let afspraakId;
 const changeMessage = async (jsonObject) => {
   // jsonObject is dan de payload van de message
   console.log(jsonObject);
-  console.log('IN CHANGE MESSAGE');
 
   let bezoekersData = await getVisitorData(afspraakId);
   console.log(bezoekersData);
@@ -119,23 +116,18 @@ const changeLocation = (id, jsonObject) => {
 const checkIfTooLate = (tijdstip) => {
   x = moment(tijdstip, 'HH:mm').add(0, 'seconds').add(30, 'minutes').format('HH:mm');
   y = moment(tijdstip, 'HH:mm').subtract(0, 'seconds').subtract(30, 'minutes').format('HH:mm');
-  console.log(tijdstip);
 
   if (time <= x && time >= y) {
-    console.log('ok');
     gsmMess.innerHTML = 'Volg nu de instructies op jouw gsm om verder te gaan';
     client.publish('F2B/connection', JSON.stringify({ connectionStatus: 'connected', afspraakId: afspraakId }));
   } else if (time > x) {
     console.log(`${time} <= ${x} ${time <= x}`);
-    console.log('te laat');
     teLaat.innerHTML = `Je bent te laat! Gelieve het onthaal te contacteren`;
     setTimeout(
       function() {
           window.location.href = `index.html`;
     }, 10000);
   } else if (time < y) {
-    console.log(`${time} <= ${x} ${time <= x}`);
-    console.log('te vroeg');
     teLaat.innerHTML = `Je bent te vroeg! Gelieve even te wachten in de cafetaria`;
     setTimeout(
       function() {
@@ -168,7 +160,6 @@ document.addEventListener('DOMContentLoaded', function () {
   let json = JSON.stringify({ locatie: URLlocatie });
   json = JSON.parse(json);
   console.log(json);
-  console.log(URLlocatie);
   if (URLlocatie != '') {
     changeMessage(json);
   }
