@@ -155,8 +155,6 @@ const checkDate = async (afspraakId) => {
 };
 
 const init = () => {
-  // htmlCamera = document.getElementById('qr-reader__dashboard');
-  // htmlCamera.style.display = 'none';
   inlogBtn = document.querySelector('.js-button');
   email.label = document.querySelector('.js-email-label');
   email.errorMessage = email.label.querySelector('.js-email-error-message');
