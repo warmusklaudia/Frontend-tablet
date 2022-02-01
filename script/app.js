@@ -1,5 +1,3 @@
-// const lanIP = `${window.location.hostname}:5000`;
-// const socket = io(`https://${lanIP}`);
 today = new Date();
 time = moment(today).format('HH:mm');
 meeting = '10:20';
@@ -138,21 +136,6 @@ const checkIfTooLate = (tijdstip) => {
   }
 };
 
-// const listenToSocket = function () {
-//     socket.on("connect", function(){
-//         console.log("Verbonden met de socket webserver");
-//     })
-//     socket.on("connection_error", (err) => {
-//         console.log(err);
-//     })
-
-//     socket.on("B2F_locatie_changed", function(jsonObject){
-//         // jsonObject is dan de payload van de message
-//         console.log("Message toegekomen: %O", jsonObject);
-//         changeMessage(jsonObject);
-//     })
-// }
-
 const get = (url) => fetch(url).then((r) => r.json());
 
 const getVisitorData = async (id) => {
@@ -181,8 +164,4 @@ document.addEventListener('DOMContentLoaded', function () {
   if (URLlocatie != '') {
     changeMessage(json);
   }
-  // event triggered functie (socket.io?) => moet nog geadd worden
-  // volgende functie komt dan in de event listener
-  // listenToSocket();
-  // changeMessage(json);
 });
