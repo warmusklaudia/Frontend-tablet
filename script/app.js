@@ -15,7 +15,7 @@ const client = mqtt.connect('ws://40.113.96.140:80', options);
 client.on('connect', function () {
   client.subscribe('B2F/locatie', function (err) {
     if (!err) {
-      console.log("Connected to Mqtt!")
+      console.log('Connected to Mqtt!');
     }
   });
 });
@@ -24,10 +24,10 @@ client.on('message', function (topic, message) {
   const msg = JSON.parse(message.toString());
 
   console.log(`Message: ${message.toString()} on Topic: ${topic}`);
-  console.log(message.locatie)
+  console.log(message.locatie);
 
   if (topic == 'B2F/locatie' && JSON.parse(message).locatie != null) {
-    console.log("IN B2F SECTION ON MESSAGE")
+    console.log('IN B2F SECTION ON MESSAGE');
     changeMessage(msg);
   }
 });
@@ -40,7 +40,7 @@ let afspraakId;
 const changeMessage = async (jsonObject) => {
   // jsonObject is dan de payload van de message
   console.log(jsonObject);
-  console.log("IN CHANGE MESSAGE")
+  console.log('IN CHANGE MESSAGE');
 
   let bezoekersData = await getVisitorData(afspraakId);
   console.log(bezoekersData);
@@ -97,8 +97,7 @@ const changeMessage = async (jsonObject) => {
   if (locatie != null) {
     message.innerHTML = htmlString;
     changeLocation(afspraakId, jsonObject);
-  }
-  else {
+  } else {
     checkIfTooLate(bezoekersData.tijdstip);
   }
 };
@@ -127,6 +126,7 @@ const checkIfTooLate = (tijdstip) => {
   if (time <= x && time >= y) {
     console.log('ok');
     gsmMess.innerHTML = 'Volg nu de instructies op jouw gsm om verder te gaan';
+    client.publish('F2B/connection', JSON.stringify({ connectionStatus: 'connected', afspraakId: afspraakId }));
   } else if (time > x) {
     console.log(`${time} <= ${x} ${time <= x}`);
     console.log('te laat');
@@ -177,8 +177,8 @@ document.addEventListener('DOMContentLoaded', function () {
   let json = JSON.stringify({ locatie: URLlocatie });
   json = JSON.parse(json);
   console.log(json);
-  console.log(URLlocatie)
-  if (URLlocatie != "") {
+  console.log(URLlocatie);
+  if (URLlocatie != '') {
     changeMessage(json);
   }
   // event triggered functie (socket.io?) => moet nog geadd worden
