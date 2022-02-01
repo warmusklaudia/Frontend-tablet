@@ -129,10 +129,18 @@ const checkIfTooLate = (tijdstip) => {
     console.log(`${time} <= ${x} ${time <= x}`);
     console.log('te laat');
     teLaat.innerHTML = `Je bent te laat! Gelieve het onthaal te contacteren`;
+    setTimeout(
+      function() {
+          window.location.href = `index.html`;
+    }, 10000);
   } else if (time < y) {
     console.log(`${time} <= ${x} ${time <= x}`);
     console.log('te vroeg');
     teLaat.innerHTML = `Je bent te vroeg! Gelieve even te wachten in de cafetaria`;
+    setTimeout(
+      function() {
+          window.location.href = `index.html`;
+    }, 10000);
   }
 };
 
